@@ -8,7 +8,6 @@ if (
 ) {
     $_SESSION["booking_token"] = bin2hex(random_bytes(32));
 }
-date_default_timezone_set("Asia/Jakarta");
 
 $folderData = __DIR__ . "/data";
 $fileTraffic = $folderData . "/traffic_trip.txt";
@@ -37,6 +36,9 @@ if (!file_exists($fileBooking)) {
 ========================================= */
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $tokenForm = $_POST["booking_token"] ?? "";
+    $tokenSession = $_SESSION["booking_token"] ?? "";
+    
     $nama = trim($_POST["nama"] ?? "");
     $whatsapp = trim($_POST["whatsapp"] ?? "");
     $destinasi = trim($_POST["destinasi"] ?? "");
@@ -120,18 +122,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
 
         if ($hasilSimpan === false) {
-            $pesan =
-                "Booking gagal disimpan. Periksa izin folder data.";
-        } else {
-            /*
-             * Redirect mencegah data tersimpan dua kali
-             * saat halaman di-refresh.
-             */
-            header(
-                "Location: index.php?status=berhasil#booking"
-            );
-            exit;
-        }
+    $pesan =
+        "Booking gagal disimpan. Periksa izin folder data.";
+} else {
+    unset($_SESSION["booking_token"]);
+
+    header(
+        "Location: index.php?status=berhasil#booking"
+    );
+
+    exit;
+}
     } else {
         $pesan = implode(" ", $daftarError);
     }
@@ -304,6 +305,17 @@ if ($file !== false) {
             <?php endif; ?>
 
             <form id="formBooking" method="post" action="" novalidate>
+                <input
+                    type="hidden"
+                        name="booking_token"
+                            value="<?php
+                            echo htmlspecialchars(
+                            $_SESSION["booking_token"] ?? "",
+                            ENT_QUOTES,
+                            "UTF-8"
+                            );
+                            ?>"
+                    >
                 <div class="form-group">
                     <label for="nama">Nama Pemesan</label>
                     <input type="text" id="nama" name="nama" autocomplete="name">
@@ -333,7 +345,13 @@ if ($file !== false) {
                     <small class="error" id="errorJumlah"></small>
                 </div>
 
-                <button class="tombol" type="submit">Kirim Booking</button>
+                <button
+                    id="submitBooking"
+                    class="tombol"
+                    type="submit"
+                    >
+                    Kirim Booking
+                </button>
             </form>
         </section>
 
