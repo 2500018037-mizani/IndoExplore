@@ -26,6 +26,35 @@ $hargaDestinasi = [
     "Karimunjawa" => 1250000
 ];
 
+function buatKodeBooking($fileBooking)
+{
+    do {
+        $angka = str_pad(
+            (string) random_int(0, 99999),
+            5,
+            "0",
+            STR_PAD_LEFT
+        );
+
+        $huruf = "";
+
+        for ($i = 0; $i < 4; $i++) {
+            $huruf .= chr(random_int(65, 90));
+        }
+
+        $kode = "#" . $angka . $huruf;
+
+        $isiFile = file_exists($fileBooking)
+            ? file_get_contents($fileBooking)
+            : "";
+    } while (
+        is_string($isiFile) &&
+        strpos($isiFile, $kode . "|") !== false
+    );
+
+    return $kode;
+}
+
 /* Membuat folder data jika belum tersedia */
 if (!is_dir($folderData)) {
     mkdir($folderData, 0775, true);
@@ -111,18 +140,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
          * tanggal|nama|whatsapp|destinasi|jumlah
          */
 
+        $kodeBooking = buatKodeBooking($fileBooking);
+
         $hargaSatuan = $hargaDestinasi[$destinasi];
         $totalHarga = $hargaSatuan * $jumlah;
         
-        $dataBooking = implode(
-            "|",
-            [
-                $tanggalBooking,
-                $namaAman,
-                $whatsappAman,
-                $destinasi,
-                $jumlah
-            ]
+       $dataBooking = implode(
+        "|",
+        [
+        $kodeBooking,
+        $tanggalBooking,
+        $namaAman,
+        $whatsappAman,
+        $destinasi,
+        $jumlah,
+        $hargaSatuan,
+        $totalHarga
+        ]
         ) . PHP_EOL;
 
         /*
@@ -140,14 +174,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         "Booking gagal disimpan. Periksa izin folder data.";
 } else {
     $_SESSION["booking_success"] = [
-        "tanggal" => $tanggalBooking,
-        "nama" => $namaAman,
-        "whatsapp" => $whatsappAman,
-        "destinasi" => $destinasi,
-        "jumlah" => $jumlah,
-        "harga_satuan" => $hargaSatuan,
-        "total_harga" => $totalHarga
-    ];
+    "kode_booking" => $kodeBooking,
+    "tanggal" => $tanggalBooking,
+    "nama" => $namaAman,
+    "whatsapp" => $whatsappAman,
+    "destinasi" => $destinasi,
+    "jumlah" => $jumlah,
+    "harga_satuan" => $hargaSatuan,
+    "total_harga" => $totalHarga
+];
 
     unset($_SESSION["booking_token"]);
 
