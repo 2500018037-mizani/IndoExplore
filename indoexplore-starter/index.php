@@ -1,16 +1,144 @@
 <?php
-$fileTraffic = __DIR__ . "/data/traffic_trip.txt";
+date_default_timezone_set("Asia/Jakarta");
+
+$folderData = __DIR__ . "/data";
+$fileTraffic = $folderData . "/traffic_trip.txt";
+$fileBooking = $folderData . "/booking_trip.txt";
 
 $totalPengunjung = 0;
 $pesan = "";
 
-if (!is_dir(__DIR__ . "/data")) {
-    mkdir(__DIR__ . "/data", 0775, true);
+/* Membuat folder data jika belum tersedia */
+if (!is_dir($folderData)) {
+    mkdir($folderData, 0775, true);
 }
 
+/* Membuat file traffic jika belum tersedia */
 if (!file_exists($fileTraffic)) {
     file_put_contents($fileTraffic, "0");
 }
+
+/* Membuat file booking jika belum tersedia */
+if (!file_exists($fileBooking)) {
+    file_put_contents($fileBooking, "");
+}
+
+/* =========================================
+   PROSES PENYIMPANAN BOOKING
+========================================= */
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nama = trim($_POST["nama"] ?? "");
+    $whatsapp = trim($_POST["whatsapp"] ?? "");
+    $destinasi = trim($_POST["destinasi"] ?? "");
+    $jumlah = filter_var(
+        $_POST["jumlah"] ?? null,
+        FILTER_VALIDATE_INT
+    );
+
+    $daftarError = [];
+
+    /* Validasi nama */
+    if ($nama === "") {
+        $daftarError[] = "Nama pemesan wajib diisi.";
+    }
+
+    /* Validasi WhatsApp */
+    if (!preg_match("/^[0-9]{10,}$/", $whatsapp)) {
+        $daftarError[] =
+            "Nomor WhatsApp harus berupa angka dan minimal 10 digit.";
+    }
+
+    /* Validasi destinasi */
+    $destinasiTersedia = [
+        "Bromo",
+        "Dieng",
+        "Karimunjawa"
+    ];
+
+    if (!in_array($destinasi, $destinasiTersedia, true)) {
+        $daftarError[] = "Destinasi yang dipilih tidak valid.";
+    }
+
+    /* Validasi jumlah peserta */
+    if ($jumlah === false || $jumlah < 1) {
+        $daftarError[] = "Jumlah peserta minimal 1 orang.";
+    }
+
+    /* Jika tidak ada kesalahan */
+    if (empty($daftarError)) {
+        /*
+         * Menghapus karakter yang dapat merusak
+         * format pemisah data.
+         */
+        $namaAman = preg_replace(
+            "/[\r\n|]+/",
+            " ",
+            $nama
+        );
+
+        $whatsappAman = preg_replace(
+            "/[\r\n|]+/",
+            "",
+            $whatsapp
+        );
+
+        $tanggalBooking = date("Y-m-d H:i:s");
+
+        /*
+         * Format:
+         * tanggal|nama|whatsapp|destinasi|jumlah
+         */
+        $dataBooking = implode(
+            "|",
+            [
+                $tanggalBooking,
+                $namaAman,
+                $whatsappAman,
+                $destinasi,
+                $jumlah
+            ]
+        ) . PHP_EOL;
+
+        /*
+         * FILE_APPEND digunakan agar data lama
+         * tidak tertimpa.
+         */
+        $hasilSimpan = file_put_contents(
+            $fileBooking,
+            $dataBooking,
+            FILE_APPEND | LOCK_EX
+        );
+
+        if ($hasilSimpan === false) {
+            $pesan =
+                "Booking gagal disimpan. Periksa izin folder data.";
+        } else {
+            /*
+             * Redirect mencegah data tersimpan dua kali
+             * saat halaman di-refresh.
+             */
+            header(
+                "Location: index.php?status=berhasil#booking"
+            );
+            exit;
+        }
+    } else {
+        $pesan = implode(" ", $daftarError);
+    }
+}
+
+/* Pesan setelah redirect berhasil */
+if (
+    isset($_GET["status"]) &&
+    $_GET["status"] === "berhasil"
+) {
+    $pesan = "Booking berhasil disimpan.";
+}
+
+/* =========================================
+   HIT COUNTER
+========================================= */
 
 $file = fopen($fileTraffic, "c+");
 
@@ -18,19 +146,37 @@ if ($file !== false) {
     if (flock($file, LOCK_EX)) {
         rewind($file);
 
-        $isiTraffic = trim(stream_get_contents($file));
+        $isiTraffic = trim(
+            stream_get_contents($file)
+        );
 
-        if ($isiTraffic === "" || !is_numeric($isiTraffic)) {
+        if (
+            $isiTraffic === "" ||
+            !is_numeric($isiTraffic)
+        ) {
             $isiTraffic = 0;
         }
 
-        $totalPengunjung = (int) $isiTraffic + 1;
+        $totalPengunjung = (int) $isiTraffic;
 
-        ftruncate($file, 0);
-        rewind($file);
+        /*
+         * Counter hanya bertambah pada request GET.
+         * Dengan begitu submit POST lalu redirect
+         * tidak dihitung dua kali.
+         */
+        if ($_SERVER["REQUEST_METHOD"] === "GET") {
+            $totalPengunjung++;
 
-        fwrite($file, (string) $totalPengunjung);
-        fflush($file);
+            ftruncate($file, 0);
+            rewind($file);
+
+            fwrite(
+                $file,
+                (string) $totalPengunjung
+            );
+
+            fflush($file);
+        }
 
         flock($file, LOCK_UN);
     }
