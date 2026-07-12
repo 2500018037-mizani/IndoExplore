@@ -52,7 +52,7 @@ $pesan = "";
 
             <div class="daftar-paket">
                 <article class="kartu-paket">
-                    <div class="placeholder-gambar">Tambahkan foto Bromo</div>
+                    <img src="images/imgbromo.jpg" alt="Wisata Gunung Bromo">
                     <div class="isi-kartu">
                         <h3>Open Trip Bromo</h3>
                         <p><strong>Durasi:</strong> 2 hari 1 malam</p>
@@ -62,7 +62,7 @@ $pesan = "";
                 </article>
 
                 <article class="kartu-paket">
-                    <div class="placeholder-gambar">Tambahkan foto Dieng</div>
+                    <img src="images/imgdieng.jpg" alt="Wisata Dieng">
                     <div class="isi-kartu">
                         <h3>Open Trip Dieng</h3>
                         <p><strong>Durasi:</strong> 2 hari 1 malam</p>
@@ -72,7 +72,7 @@ $pesan = "";
                 </article>
 
                 <article class="kartu-paket">
-                    <div class="placeholder-gambar">Tambahkan foto Karimunjawa</div>
+                    <img src="images/imgKarimunjawa.jpg" alt="Wisata Karimunjawa">
                     <div class="isi-kartu">
                         <h3>Open Trip Karimunjawa</h3>
                         <p><strong>Durasi:</strong> 3 hari 2 malam</p>
