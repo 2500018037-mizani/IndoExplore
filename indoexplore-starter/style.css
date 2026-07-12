@@ -1,0 +1,227 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1f2937;
+    background: #f8fafc;
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.hero {
+    min-height: 80vh;
+    padding: 24px 8%;
+    color: white;
+    background: linear-gradient(135deg, #0f766e, #164e63);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.hero-content {
+    max-width: 720px;
+    padding: 120px 0 80px;
+}
+
+.hero-content h1 {
+    margin: 12px 0 20px;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    line-height: 1.1;
+}
+
+.hero-content p {
+    max-width: 620px;
+    margin-bottom: 28px;
+}
+
+.label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 0.18em;
+}
+
+.tombol {
+    display: inline-block;
+    padding: 13px 22px;
+    border: 0;
+    border-radius: 10px;
+    background: #f59e0b;
+    color: #111827;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.section {
+    padding: 80px 8%;
+}
+
+.section-heading {
+    margin-bottom: 32px;
+}
+
+.section-heading h2 {
+    margin-top: 8px;
+    font-size: 2rem;
+}
+
+.daftar-paket {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.kartu-paket {
+    overflow: hidden;
+    border: 1px solid #dbe4ea;
+    border-radius: 18px;
+    background: white;
+}
+
+.placeholder-gambar {
+    display: grid;
+    min-height: 220px;
+    place-items: center;
+    padding: 20px;
+    color: #475569;
+    background: #dbeafe;
+    text-align: center;
+}
+
+.isi-kartu {
+    padding: 22px;
+}
+
+.isi-kartu h3 {
+    margin-bottom: 14px;
+}
+
+.isi-kartu p {
+    margin-bottom: 10px;
+}
+
+.harga {
+    color: #0f766e;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.section-booking {
+    background: #ecfeff;
+}
+
+form {
+    max-width: 720px;
+    padding: 28px;
+    border-radius: 18px;
+    background: white;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font: inherit;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #14b8a6;
+    border-color: transparent;
+}
+
+.error {
+    display: block;
+    min-height: 20px;
+    margin-top: 5px;
+    color: #b91c1c;
+}
+
+.pesan {
+    max-width: 720px;
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: #dcfce7;
+}
+
+.counter {
+    padding: 48px 8%;
+    text-align: center;
+}
+
+.counter strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 2.5rem;
+    color: #0f766e;
+}
+
+footer {
+    padding: 24px 8%;
+    color: white;
+    background: #0f172a;
+    text-align: center;
+}
+
+@media (max-width: 850px) {
+    .daftar-paket {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .hero-content {
+        padding-top: 80px;
+    }
+
+    .section {
+        padding: 60px 6%;
+    }
+
+    form {
+        padding: 20px;
+    }
+}

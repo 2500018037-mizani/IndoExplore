@@ -1,0 +1,1 @@
+Simpan foto wisata di folder ini, lalu ganti placeholder pada index.php dengan tag <img>.
