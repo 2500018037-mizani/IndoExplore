@@ -47,6 +47,36 @@ if ($file !== false) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="openingIntro" class="opening-intro">
+    <div class="opening-overlay"></div>
+
+    <div class="opening-decoration decoration-one"></div>
+    <div class="opening-decoration decoration-two"></div>
+
+    <div class="opening-content">
+        <p class="opening-small">WELCOME TO</p>
+
+        <h1 class="opening-logo">
+            Indo<span>Explore</span>
+        </h1>
+
+        <div class="opening-line"></div>
+
+        <p class="opening-tagline">
+            Temukan cerita baru di setiap perjalanan
+        </p>
+
+        <button id="enterWebsite" class="opening-button">
+            <span>Mulai Menjelajah</span>
+            <span class="opening-arrow">→</span>
+        </button>
+    </div>
+
+    <div class="scroll-indicator">
+        <span></span>
+        <p>EXPLORE</p>
+    </div>
+</div>
     <header class="hero">
         <nav class="navbar">
             <a class="logo" href="#beranda">IndoExplore</a>
