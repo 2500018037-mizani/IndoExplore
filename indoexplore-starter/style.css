@@ -1057,3 +1057,33 @@ body.intro-active {
     margin: 12px 0 28px;
     color: #64748b;
 }
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+
+    padding: 5px 10px;
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.navbar-logo img {
+    display: block;
+
+    width: auto;
+    height: 42px;
+
+    object-fit: contain;
+}
+
+.navbar-logo:hover {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .navbar-logo img {
+        height: 34px;
+    }
+}
