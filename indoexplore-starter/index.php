@@ -83,6 +83,7 @@ if ($file !== false) {
             <div class="nav-links">
                 <a href="#paket">Paket</a>
                 <a href="#booking">Booking</a>
+                <a href="listbooking.php">Hasil Booking</a>
             </div>
         </nav>
 
