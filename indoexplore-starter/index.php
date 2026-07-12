@@ -201,6 +201,16 @@ if ($file !== false) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IndoExplore - Paket Open Trip Lokal</title>
     <link rel="stylesheet" href="style.css">
+    <link
+    rel="icon"
+    type="image/png"
+    href="images/Logo FAV.png"
+>
+
+<link
+    rel="apple-touch-icon"
+    href="images/favicon.png"
+>
 </head>
 <body>
     <div id="openingIntro" class="opening-intro">
@@ -235,7 +245,12 @@ if ($file !== false) {
 </div>
     <header class="hero">
         <nav class="navbar">
-            <a class="logo" href="#beranda">IndoExplore</a>
+            <a class="logo" href="#beranda">
+                <img
+                    src="images/Logo.png"
+                    alt="Logo IndoExplore"
+                    >
+            </a>
             <div class="nav-links">
                 <a href="#paket">Paket</a>
                 <a href="#booking">Booking</a>
