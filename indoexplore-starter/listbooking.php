@@ -1,9 +1,19 @@
 <?php
 $fileBooking = __DIR__ . "/data/booking_trip.txt";
+
 $daftarBooking = [];
 $pesanError = "";
 
-/* Membaca file booking */
+$totalBooking = 0;
+$totalPeserta = 0;
+$totalPendapatan = 0;
+
+$hargaDestinasi = [
+    "Bromo" => 750000,
+    "Dieng" => 650000,
+    "Karimunjawa" => 1250000
+];
+
 if (file_exists($fileBooking)) {
     $hasilBaca = file(
         $fileBooking,
@@ -11,9 +21,77 @@ if (file_exists($fileBooking)) {
     );
 
     if ($hasilBaca !== false) {
-        $daftarBooking = $hasilBaca;
+        foreach ($hasilBaca as $baris) {
+            $data = explode("|", $baris);
+
+            /*
+             * Format baru:
+             * kode|tanggal|nama|whatsapp|destinasi|
+             * jumlah|harga_satuan|total_harga
+             */
+            if (count($data) >= 8) {
+                $kodeBooking = trim($data[0]);
+                $tanggal = trim($data[1]);
+                $nama = trim($data[2]);
+                $whatsapp = trim($data[3]);
+                $destinasi = trim($data[4]);
+                $jumlah = (int) trim($data[5]);
+                $hargaSatuan = (int) trim($data[6]);
+                $totalHarga = (int) trim($data[7]);
+            }
+
+            /*
+             * Dukungan untuk data lama yang masih
+             * memakai lima kolom.
+             */
+            elseif (count($data) >= 5) {
+                $tanggal = trim($data[0]);
+                $nama = trim($data[1]);
+                $whatsapp = trim($data[2]);
+                $destinasi = trim($data[3]);
+                $jumlah = (int) trim($data[4]);
+
+                $angkaKode = str_pad(
+                    (string) (abs(crc32($baris)) % 100000),
+                    5,
+                    "0",
+                    STR_PAD_LEFT
+                );
+
+                $kodeBooking = "#" . $angkaKode . "LGCY";
+
+                $hargaSatuan =
+                    $hargaDestinasi[$destinasi] ?? 0;
+
+                $totalHarga =
+                    $hargaSatuan * $jumlah;
+            } else {
+                continue;
+            }
+
+            $daftarBooking[] = [
+                "kode" => $kodeBooking,
+                "tanggal" => $tanggal,
+                "nama" => $nama,
+                "whatsapp" => $whatsapp,
+                "destinasi" => $destinasi,
+                "jumlah" => $jumlah,
+                "harga_satuan" => $hargaSatuan,
+                "total_harga" => $totalHarga
+            ];
+
+            $totalBooking++;
+            $totalPeserta += $jumlah;
+            $totalPendapatan += $totalHarga;
+        }
+
+        /*
+         * Booking terbaru ditampilkan paling atas.
+         */
+        $daftarBooking = array_reverse($daftarBooking);
     } else {
-        $pesanError = "File booking tidak dapat dibaca.";
+        $pesanError =
+            "File booking tidak dapat dibaca.";
     }
 }
 ?>
@@ -78,6 +156,44 @@ if (file_exists($fileBooking)) {
 </header>
 
     <main class="section list-booking-section">
+    <div class="booking-summary-grid">
+
+    <article class="summary-card">
+        <span>Total Booking</span>
+
+        <strong>
+            <?php echo $totalBooking; ?>
+        </strong>
+
+        <small>pemesanan tersimpan</small>
+    </article>
+
+    <article class="summary-card">
+        <span>Total Peserta</span>
+
+        <strong>
+            <?php echo $totalPeserta; ?>
+        </strong>
+
+        <small>orang mengikuti trip</small>
+    </article>
+
+    <article class="summary-card">
+        <span>Total Nilai Booking</span>
+
+        <strong class="summary-money">
+            Rp<?php echo number_format(
+                $totalPendapatan,
+                0,
+                ",",
+                "."
+            ); ?>
+        </strong>
+
+        <small>seluruh pemesanan</small>
+    </article>
+
+</div>
 
         <?php if ($pesanError !== ""): ?>
 
@@ -118,96 +234,99 @@ if (file_exists($fileBooking)) {
                 <table class="booking-table">
 
                     <thead>
-
-                        <tr>
-                            <th>No.</th>
-                            <th>Tanggal</th>
-                            <th>Nama</th>
-                            <th>WhatsApp</th>
-                            <th>Destinasi</th>
-                            <th>Peserta</th>
-                        </tr>
-
+                    <tr>
+                    <th>No.</th>
+                        <th>Kode Booking</th>
+                        <th>Tanggal</th>
+                        <th>Nama</th>
+                        <th>WhatsApp</th>
+                        <th>Destinasi</th>
+                        <th>Peserta</th>
+                        <th>Harga/Orang</th>
+                        <th>Total Harga</th>
+                    </tr>
                     </thead>
 
                     <tbody>
 
-                        <?php
-                        $nomor = 1;
+    <?php foreach ($daftarBooking as $index => $booking): ?>
 
-                        foreach ($daftarBooking as $baris):
-                            $data = explode("|", $baris);
+        <tr>
+            <td>
+                <?php echo $index + 1; ?>
+            </td>
 
-                            /*
-                             * Format data:
-                             * tanggal|nama|whatsapp|destinasi|jumlah
-                             */
-                            if (count($data) < 5) {
-                                continue;
-                            }
+            <td>
+                <span class="booking-code">
+                    <?php echo htmlspecialchars(
+                        $booking["kode"],
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ); ?>
+                </span>
+            </td>
 
-                            $tanggal = trim($data[0]);
-                            $nama = trim($data[1]);
-                            $whatsapp = trim($data[2]);
-                            $destinasi = trim($data[3]);
-                            $jumlah = trim($data[4]);
-                        ?>
+            <td>
+                <?php echo htmlspecialchars(
+                    $booking["tanggal"],
+                    ENT_QUOTES,
+                    "UTF-8"
+                ); ?>
+            </td>
 
-                            <tr>
+            <td>
+                <?php echo htmlspecialchars(
+                    $booking["nama"],
+                    ENT_QUOTES,
+                    "UTF-8"
+                ); ?>
+            </td>
 
-                                <td>
-                                    <?php echo $nomor; ?>
-                                </td>
+            <td>
+                <?php echo htmlspecialchars(
+                    $booking["whatsapp"],
+                    ENT_QUOTES,
+                    "UTF-8"
+                ); ?>
+            </td>
 
-                                <td>
-                                    <?php echo htmlspecialchars(
-                                        $tanggal,
-                                        ENT_QUOTES,
-                                        "UTF-8"
-                                    ); ?>
-                                </td>
+            <td>
+                <span class="destination-badge">
+                    <?php echo htmlspecialchars(
+                        $booking["destinasi"],
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ); ?>
+                </span>
+            </td>
 
-                                <td>
-                                    <?php echo htmlspecialchars(
-                                        $nama,
-                                        ENT_QUOTES,
-                                        "UTF-8"
-                                    ); ?>
-                                </td>
+            <td>
+                <?php echo (int) $booking["jumlah"]; ?>
+                orang
+            </td>
 
-                                <td>
-                                    <?php echo htmlspecialchars(
-                                        $whatsapp,
-                                        ENT_QUOTES,
-                                        "UTF-8"
-                                    ); ?>
-                                </td>
+            <td>
+                Rp<?php echo number_format(
+                    $booking["harga_satuan"],
+                    0,
+                    ",",
+                    "."
+                ); ?>
+            </td>
 
-                                <td>
-                                    <?php echo htmlspecialchars(
-                                        $destinasi,
-                                        ENT_QUOTES,
-                                        "UTF-8"
-                                    ); ?>
-                                </td>
+            <td class="total-price-cell">
+                Rp<?php echo number_format(
+                    $booking["total_harga"],
+                    0,
+                    ",",
+                    "."
+                ); ?>
+            </td>
+        </tr>
 
-                                <td>
-                                    <?php echo htmlspecialchars(
-                                        $jumlah,
-                                        ENT_QUOTES,
-                                        "UTF-8"
-                                    ); ?> orang
-                                </td>
+    <?php endforeach; ?>
 
-                            </tr>
-
-                        <?php
-                            $nomor++;
-                        endforeach;
-                        ?>
-
-                    </tbody>
-
+</tbody>
                 </table>
 
             </div>
