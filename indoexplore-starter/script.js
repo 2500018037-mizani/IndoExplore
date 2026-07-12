@@ -92,7 +92,14 @@ if (formBooking) {
         }
 
         if (adaKesalahan) {
-            event.preventDefault();
-        }
+    event.preventDefault();
+    return;
+}
+
+const submitBooking =
+    document.getElementById("submitBooking");
+
+submitBooking.disabled = true;
+submitBooking.textContent = "Menyimpan...";
     });
 }
