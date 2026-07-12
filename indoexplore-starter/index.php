@@ -167,19 +167,19 @@ if ($file !== false) {
             </p>
 
             <div class="social-media">
-                <a href="https://instagram.com/username"
+                <a href="https://instagram.com/mizani_alriyzqi_"
                    target="_blank"
                    aria-label="Instagram">
                     IG
                 </a>
 
-                <a href="https://github.com/username"
+                <a href="https://github.com/mizanialriyzqi"
                    target="_blank"
                    aria-label="GitHub">
                     GH
                 </a>
 
-                <a href="https://wa.me/6281234567890"
+                <a href="https://wa.me/6285783733273"
                    target="_blank"
                    aria-label="WhatsApp">
                     WA
