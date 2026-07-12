@@ -1087,3 +1087,118 @@ body.intro-active {
         height: 34px;
     }
 }
+
+/* =========================================================
+   FINAL FIX — NAVBAR & LOGO
+   Letakkan bagian ini paling bawah agar menimpa aturan lama.
+========================================================= */
+
+.navbar {
+    width: 100%;
+    min-height: 72px;
+    padding: 10px 18px;
+    gap: 24px;
+}
+
+/* Mendukung HTML class="navbar-logo" maupun class="logo" yang berisi img */
+.navbar-logo,
+.navbar .logo:has(img) {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+
+    width: 210px;
+    max-width: 42vw;
+    height: 54px;
+
+    padding: 0;
+    margin: 0;
+
+    overflow: hidden;
+    border-radius: 0;
+    background: transparent;
+
+    transition: transform 0.25s ease;
+}
+
+.navbar-logo:hover,
+.navbar .logo:has(img):hover {
+    transform: translateY(-2px);
+}
+
+/* Selector cadangan supaya gambar tetap kecil walau class HTML belum sama */
+.navbar-logo img,
+.navbar .logo img,
+.navbar > a:first-child img {
+    display: block !important;
+
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+
+    object-fit: contain !important;
+    object-position: left center;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-left: auto;
+}
+
+.nav-links a {
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        top: 10px;
+        min-height: 64px;
+        padding: 8px 12px;
+
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .navbar-logo,
+    .navbar .logo:has(img) {
+        width: 165px;
+        max-width: 48vw;
+        height: 42px;
+    }
+
+    .nav-links {
+        gap: 12px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 520px) {
+    .navbar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 14px;
+    }
+
+    .navbar-logo,
+    .navbar .logo:has(img) {
+        width: 145px;
+        max-width: 70vw;
+        height: 38px;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+
+        margin-left: 0;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+    }
+}
