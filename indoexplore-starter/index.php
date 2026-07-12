@@ -2,6 +2,10 @@
 session_start();
 date_default_timezone_set("Asia/Jakarta");
 
+$bookingBerhasil = $_SESSION["booking_success"] ?? null;
+
+unset($_SESSION["booking_success"]);
+
 if (
     $_SERVER["REQUEST_METHOD"] === "GET" &&
     empty($_SESSION["booking_token"])
@@ -15,6 +19,12 @@ $fileBooking = $folderData . "/booking_trip.txt";
 
 $totalPengunjung = 0;
 $pesan = "";
+
+$hargaDestinasi = [
+    "Bromo" => 750000,
+    "Dieng" => 650000,
+    "Karimunjawa" => 1250000
+];
 
 /* Membuat folder data jika belum tersedia */
 if (!is_dir($folderData)) {
@@ -100,6 +110,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
          * Format:
          * tanggal|nama|whatsapp|destinasi|jumlah
          */
+
+        $hargaSatuan = $hargaDestinasi[$destinasi];
+        $totalHarga = $hargaSatuan * $jumlah;
+        
         $dataBooking = implode(
             "|",
             [
@@ -125,6 +139,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pesan =
         "Booking gagal disimpan. Periksa izin folder data.";
 } else {
+    $_SESSION["booking_success"] = [
+        "tanggal" => $tanggalBooking,
+        "nama" => $namaAman,
+        "whatsapp" => $whatsappAman,
+        "destinasi" => $destinasi,
+        "jumlah" => $jumlah,
+        "harga_satuan" => $hargaSatuan,
+        "total_harga" => $totalHarga
+    ];
+
     unset($_SESSION["booking_token"]);
 
     header(
@@ -133,9 +157,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     exit;
 }
-    } else {
-        $pesan = implode(" ", $daftarError);
-    }
+
+} else {
+    $pesan = implode(" ", $daftarError);
 }
 
 /* Pesan setelah redirect berhasil */
@@ -327,6 +351,144 @@ if ($file !== false) {
             <?php if ($pesan !== ""): ?>
                 <div class="pesan"><?php echo htmlspecialchars($pesan); ?></div>
             <?php endif; ?>
+
+            <?php if ($bookingBerhasil !== null): ?>
+
+    <div class="booking-success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <div class="success-heading">
+            <p class="success-label">
+                BOOKING BERHASIL
+            </p>
+
+            <h3>
+                Berhasil Memesan Trip!
+            </h3>
+
+            <p>
+                Terima kasih, booking perjalanan kamu berhasil disimpan.
+            </p>
+        </div>
+
+        <div class="booking-detail">
+
+            <div class="detail-item">
+                <span>Nama Pemesan</span>
+
+                <strong>
+                    <?php echo htmlspecialchars(
+                        $bookingBerhasil["nama"],
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ); ?>
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Nomor WhatsApp</span>
+
+                <strong>
+                    <?php echo htmlspecialchars(
+                        $bookingBerhasil["whatsapp"],
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ); ?>
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Destinasi</span>
+
+                <strong>
+                    <?php echo htmlspecialchars(
+                        $bookingBerhasil["destinasi"],
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ); ?>
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Jumlah Peserta</span>
+
+                <strong>
+                    <?php echo (int) $bookingBerhasil["jumlah"]; ?>
+                    orang
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Harga per Orang</span>
+
+                <strong>
+                    Rp<?php echo number_format(
+                        $bookingBerhasil["harga_satuan"],
+                        0,
+                        ",",
+                        "."
+                    ); ?>
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Waktu Booking</span>
+
+                <strong>
+                    <?php echo htmlspecialchars(
+                        $bookingBerhasil["tanggal"],
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ); ?>
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="booking-total">
+            <div>
+                <span>Total Pembayaran</span>
+
+                <small>
+                    <?php echo (int) $bookingBerhasil["jumlah"]; ?>
+                    peserta
+                </small>
+            </div>
+
+            <strong>
+                Rp<?php echo number_format(
+                    $bookingBerhasil["total_harga"],
+                    0,
+                    ",",
+                    "."
+                ); ?>
+            </strong>
+        </div>
+
+        <div class="success-actions">
+
+            <a
+                href="listbooking.php"
+                class="tombol"
+            >
+                Lihat Daftar Booking
+            </a>
+
+            <a
+                href="#paket"
+                class="tombol tombol-outline"
+            >
+                Lihat Paket Lain
+            </a>
+
+        </div>
+
+    </div>
+
+<?php endif; ?>
 
             <form id="formBooking" method="post" action="" novalidate>
                 <input
