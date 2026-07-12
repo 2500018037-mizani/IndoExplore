@@ -28,6 +28,16 @@ if (file_exists($fileBooking)) {
     <title>Daftar Booking - IndoExplore</title>
 
     <link rel="stylesheet" href="style.css">
+    <link
+    rel="icon"
+    type="image/png"
+    href="images/Logo FAV.png"
+>
+
+<link
+    rel="apple-touch-icon"
+    href="images/favicon.png"
+>
 </head>
 
 <body>
@@ -37,7 +47,10 @@ if (file_exists($fileBooking)) {
         <nav class="navbar navbar-list">
 
             <a class="logo" href="index.php">
-                IndoExplore
+                <img
+                    src="images/Logo.png"
+                    alt="Logo IndoExplore"
+                >
             </a>
 
             <div class="nav-links">
