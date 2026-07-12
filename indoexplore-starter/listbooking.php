@@ -42,42 +42,40 @@ if (file_exists($fileBooking)) {
 
 <body>
 
-    <header class="header-list">
+   <header class="header-list">
 
-        <nav class="navbar navbar-list">
+    <nav class="navbar navbar-list">
 
-            <a class="logo" href="index.php">
-                <img
-                    src="images/Logo.png"
-                    alt="Logo IndoExplore"
-                >
+        <a class="navbar-logo" href="index.php">
+            <img
+                src="images/Logo.png"
+                alt="Logo IndoExplore"
+            >
+        </a>
+
+        <div class="nav-links">
+            <a href="index.php">Beranda</a>
+            <a href="index.php#paket">Paket</a>
+            <a href="index.php#booking">Booking</a>
+
+            <a href="listbooking.php" class="nav-active">
+                Hasil Booking
             </a>
-
-            <div class="nav-links">
-                <a href="index.php">Beranda</a>
-                <a href="index.php#paket">Paket</a>
-                <a href="index.php#booking">Booking</a>
-
-                <a href="listbooking.php" class="nav-active">
-                    Hasil Booking
-                </a>
-            </div>
-
-        </nav>
-
-        <div class="header-list-content">
-
-            <p class="label">
-                DATA PEMESANAN
-            </p>
-
-            <h1>
-                Daftar Booking Trip
-            </h1>
-
         </div>
 
-    </header>
+    </nav>
+
+    <div class="header-list-content">
+        <p class="label">
+            DATA PEMESANAN
+        </p>
+
+        <h1>
+            Daftar Booking Trip
+        </h1>
+    </div>
+
+</header>
 
     <main class="section list-booking-section">
 
