@@ -1,3 +1,13 @@
+:root {
+    --hijau-gelap: #12372a;
+    --hijau: #436850;
+    --hijau-muda: #adbc9f;
+    --cream: #fbfada;
+    --putih: #ffffff;
+    --teks: #1f2937;
+    --orange: #f59e0b;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -21,17 +31,37 @@ a {
 }
 
 .hero {
-    min-height: 80vh;
+    min-height: 100vh;
     padding: 24px 8%;
     color: white;
-    background: linear-gradient(135deg, #0f766e, #164e63);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(10, 35, 25, 0.92),
+            rgba(10, 35, 25, 0.45)
+        ),
+        url("images/hero-indonesia.jpg");
+
+    background-position: center;
+    background-size: cover;
 }
 
 .navbar {
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 24px;
+
+    padding: 14px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px);
 }
 
 .logo {
@@ -224,4 +254,92 @@ footer {
     form {
         padding: 20px;
     }
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+
+    max-width: 900px;
+    padding: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 28px;
+
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(16px);
+
+    box-shadow: 0 24px 70px rgba(18, 55, 42, 0.12);
+}
+
+form .tombol {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 700px) {
+    form {
+        grid-template-columns: 1fr;
+        padding: 22px;
+    }
+}
+
+.info-singkat {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 14px 0;
+}
+
+.info-singkat span {
+    padding: 7px 10px;
+    border-radius: 999px;
+    color: #436850;
+    background: #f0f5ed;
+    font-size: 0.82rem;
+}
+
+.kartu-paket {
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    background: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.kartu-paket:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 50px rgba(18, 55, 42, 0.15);
+}
+
+.gambar-paket {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+}
+
+.gambar-paket img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.kartu-paket:hover .gambar-paket img {
+    transform: scale(1.08);
+}
+
+.badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+
+    padding: 7px 13px;
+    border-radius: 999px;
+
+    color: white;
+    background: rgba(18, 55, 42, 0.85);
+    backdrop-filter: blur(8px);
+
+    font-size: 0.8rem;
+    font-weight: bold;
 }
