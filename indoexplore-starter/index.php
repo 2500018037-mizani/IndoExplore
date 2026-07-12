@@ -253,6 +253,7 @@ if ($file !== false) {
         </a>
 
         <div class="nav-links">
+            <a href="index.php">Beranda</a>
             <a href="#paket">Paket</a>
             <a href="#booking">Booking</a>
             <a href="listbooking.php">Hasil Booking</a>
