@@ -1,4 +1,13 @@
 <?php
+session_start();
+date_default_timezone_set("Asia/Jakarta");
+
+if (
+    $_SERVER["REQUEST_METHOD"] === "GET" &&
+    empty($_SESSION["booking_token"])
+) {
+    $_SESSION["booking_token"] = bin2hex(random_bytes(32));
+}
 date_default_timezone_set("Asia/Jakarta");
 
 $folderData = __DIR__ . "/data";
