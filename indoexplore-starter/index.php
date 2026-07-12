@@ -161,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 } else {
     $pesan = implode(" ", $daftarError);
 }
-
+}
 /* Pesan setelah redirect berhasil */
 if (
     isset($_GET["status"]) &&
