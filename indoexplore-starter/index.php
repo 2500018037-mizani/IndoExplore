@@ -391,117 +391,132 @@ if ($file !== false) {
 
     <div class="booking-success-card">
 
-        <div class="success-icon">
-            ✓
+    <div class="success-icon">
+        ✓
+    </div>
+
+    <div class="success-heading">
+        <p class="success-label">
+            BOOKING BERHASIL
+        </p>
+
+        <h3>
+            Berhasil Memesan Trip!
+        </h3>
+
+        <p>
+            Terima kasih, booking perjalanan kamu berhasil disimpan.
+        </p>
+    </div>
+
+    <!-- KODE BOOKING DITARUH DI SINI -->
+    <div class="booking-code-success">
+        <span>Kode Booking</span>
+
+        <strong>
+            <?php echo htmlspecialchars(
+                $bookingBerhasil["kode_booking"] ?? "-",
+                ENT_QUOTES,
+                "UTF-8"
+            ); ?>
+        </strong>
+    </div>
+
+    <div class="booking-detail">
+
+        <div class="detail-item">
+            <span>Nama Pemesan</span>
+
+            <strong>
+                <?php echo htmlspecialchars(
+                    $bookingBerhasil["nama"],
+                    ENT_QUOTES,
+                    "UTF-8"
+                ); ?>
+            </strong>
         </div>
 
-        <div class="success-heading">
-            <p class="success-label">
-                BOOKING BERHASIL
-            </p>
+        <div class="detail-item">
+            <span>Nomor WhatsApp</span>
 
-            <h3>
-                Berhasil Memesan Trip!
-            </h3>
-
-            <p>
-                Terima kasih, booking perjalanan kamu berhasil disimpan.
-            </p>
+            <strong>
+                <?php echo htmlspecialchars(
+                    $bookingBerhasil["whatsapp"],
+                    ENT_QUOTES,
+                    "UTF-8"
+                ); ?>
+            </strong>
         </div>
 
-        <div class="booking-detail">
+        <div class="detail-item">
+            <span>Destinasi</span>
 
-            <div class="detail-item">
-                <span>Nama Pemesan</span>
-
-                <strong>
-                    <?php echo htmlspecialchars(
-                        $bookingBerhasil["nama"],
-                        ENT_QUOTES,
-                        "UTF-8"
-                    ); ?>
-                </strong>
-            </div>
-
-            <div class="detail-item">
-                <span>Nomor WhatsApp</span>
-
-                <strong>
-                    <?php echo htmlspecialchars(
-                        $bookingBerhasil["whatsapp"],
-                        ENT_QUOTES,
-                        "UTF-8"
-                    ); ?>
-                </strong>
-            </div>
-
-            <div class="detail-item">
-                <span>Destinasi</span>
-
-                <strong>
-                    <?php echo htmlspecialchars(
-                        $bookingBerhasil["destinasi"],
-                        ENT_QUOTES,
-                        "UTF-8"
-                    ); ?>
-                </strong>
-            </div>
-
-            <div class="detail-item">
-                <span>Jumlah Peserta</span>
-
-                <strong>
-                    <?php echo (int) $bookingBerhasil["jumlah"]; ?>
-                    orang
-                </strong>
-            </div>
-
-            <div class="detail-item">
-                <span>Harga per Orang</span>
-
-                <strong>
-                    Rp<?php echo number_format(
-                        $bookingBerhasil["harga_satuan"],
-                        0,
-                        ",",
-                        "."
-                    ); ?>
-                </strong>
-            </div>
-
-            <div class="detail-item">
-                <span>Waktu Booking</span>
-
-                <strong>
-                    <?php echo htmlspecialchars(
-                        $bookingBerhasil["tanggal"],
-                        ENT_QUOTES,
-                        "UTF-8"
-                    ); ?>
-                </strong>
-            </div>
-
+            <strong>
+                <?php echo htmlspecialchars(
+                    $bookingBerhasil["destinasi"],
+                    ENT_QUOTES,
+                    "UTF-8"
+                ); ?>
+            </strong>
         </div>
 
-        <div class="booking-total">
-            <div>
-                <span>Total Pembayaran</span>
+        <div class="detail-item">
+            <span>Jumlah Peserta</span>
 
-                <small>
-                    <?php echo (int) $bookingBerhasil["jumlah"]; ?>
-                    peserta
-                </small>
-            </div>
+            <strong>
+                <?php echo (int) $bookingBerhasil["jumlah"]; ?>
+                orang
+            </strong>
+        </div>
+
+        <div class="detail-item">
+            <span>Harga per Orang</span>
 
             <strong>
                 Rp<?php echo number_format(
-                    $bookingBerhasil["total_harga"],
+                    $bookingBerhasil["harga_satuan"],
                     0,
                     ",",
                     "."
                 ); ?>
             </strong>
         </div>
+
+        <div class="detail-item">
+            <span>Waktu Booking</span>
+
+            <strong>
+                <?php echo htmlspecialchars(
+                    $bookingBerhasil["tanggal"],
+                    ENT_QUOTES,
+                    "UTF-8"
+                ); ?>
+            </strong>
+        </div>
+
+    </div>
+
+    <div class="booking-total">
+        <div>
+            <span>Total Pembayaran</span>
+
+            <small>
+                <?php echo (int) $bookingBerhasil["jumlah"]; ?>
+                peserta
+            </small>
+        </div>
+
+        <strong>
+            Rp<?php echo number_format(
+                $bookingBerhasil["total_harga"],
+                0,
+                ",",
+                "."
+            ); ?>
+        </strong>
+    </div>
+
+</div>
 
         <div class="success-actions">
 
