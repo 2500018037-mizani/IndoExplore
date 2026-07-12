@@ -244,30 +244,38 @@ if ($file !== false) {
     </div>
 </div>
     <header class="hero">
-        <nav class="navbar">
-            <a class="logo" href="#beranda">
-                <img
-                    src="images/Logo.png"
-                    alt="Logo IndoExplore"
-                    >
-            </a>
-            <div class="nav-links">
-                <a href="#paket">Paket</a>
-                <a href="#booking">Booking</a>
-                <a href="listbooking.php">Hasil Booking</a>
-            </div>
-        </nav>
+    <nav class="navbar">
+        <a class="navbar-logo" href="index.php#beranda">
+            <img
+                src="images/Logo.png"
+                alt="Logo IndoExplore"
+            >
+        </a>
 
-        <section id="beranda" class="hero-content">
-            <p class="label">OPEN TRIP LOKAL INDONESIA</p>
-            <h1>Jelajahi destinasi terbaik bersama IndoExplore</h1>
-            <p>
-                Pilih paket perjalanan lokal dan lakukan pemesanan kursi
-                melalui formulir yang tersedia.
-            </p>
-            <a class="tombol" href="#paket">Lihat Paket</a>
-        </section>
-    </header>
+        <div class="nav-links">
+            <a href="#paket">Paket</a>
+            <a href="#booking">Booking</a>
+            <a href="listbooking.php">Hasil Booking</a>
+        </div>
+    </nav>
+
+    <section id="beranda" class="hero-content">
+        <p class="label">OPEN TRIP LOKAL INDONESIA</p>
+
+        <h1>
+            Jelajahi destinasi terbaik bersama IndoExplore
+        </h1>
+
+        <p>
+            Pilih paket perjalanan lokal dan lakukan pemesanan kursi
+            melalui formulir yang tersedia.
+        </p>
+
+        <a class="tombol" href="#paket">
+            Lihat Paket
+        </a>
+    </section>
+</header>
 
     <main>
         <section id="paket" class="section">
