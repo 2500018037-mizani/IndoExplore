@@ -62,10 +62,6 @@ if (file_exists($fileBooking)) {
                 Daftar Booking Trip
             </h1>
 
-            <p>
-                Data pemesanan yang tersimpan di booking_trip.txt.
-            </p>
-
         </div>
 
     </header>
