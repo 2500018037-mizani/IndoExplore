@@ -157,9 +157,67 @@ if ($file !== false) {
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 IndoExplore</p>
-    </footer>
+    <footer class="footer-modern">
+    <div class="footer-container">
+        <div class="footer-profile">
+            <h2>IndoExplore</h2>
+            <p>
+                Temukan pengalaman perjalanan lokal terbaik dan jelajahi
+                keindahan Indonesia bersama kami.
+            </p>
+
+            <div class="social-media">
+                <a href="https://instagram.com/username"
+                   target="_blank"
+                   aria-label="Instagram">
+                    IG
+                </a>
+
+                <a href="https://github.com/username"
+                   target="_blank"
+                   aria-label="GitHub">
+                    GH
+                </a>
+
+                <a href="https://wa.me/6281234567890"
+                   target="_blank"
+                   aria-label="WhatsApp">
+                    WA
+                </a>
+
+                <a href="mailto:email@gmail.com"
+                   aria-label="Email">
+                    EM
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-menu">
+            <h3>Jelajahi</h3>
+
+            <a href="#beranda">Beranda</a>
+            <a href="#paket">Paket Wisata</a>
+            <a href="#booking">Booking Trip</a>
+        </div>
+
+        <div class="footer-developer">
+            <h3>Developer</h3>
+
+            <p>Mizani Alriyzqi</p>
+            <p>Informatika</p>
+            <p>Universitas Ahmad Dahlan</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>
+            Dibuat dengan semangat eksplorasi oleh
+            <strong>Mizani Alriyzqi</strong>
+        </p>
+
+        <p>&copy; 2026 IndoExplore. All rights reserved.</p>
+    </div>
+</footer>
 
     <script src="script.js"></script>
 </body>
