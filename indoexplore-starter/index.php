@@ -1,18 +1,42 @@
 <?php
-// TODO 1:
-// Baca nilai dari file data/traffic_trip.txt.
-// Tambahkan nilainya satu.
-// Simpan kembali tanpa menghapus isi file yang diperlukan.
+$fileTraffic = __DIR__ . "/data/traffic_trip.txt";
 
 $totalPengunjung = 0;
 $pesan = "";
 
-// TODO 2:
-// Saat request POST:
-// 1. Ambil data nama, WhatsApp, destinasi, dan jumlah peserta.
-// 2. Bersihkan serta validasi input menggunakan PHP.
-// 3. Susun satu baris data booking.
-// 4. Simpan ke data/booking_trip.txt menggunakan mode append.
+if (!is_dir(__DIR__ . "/data")) {
+    mkdir(__DIR__ . "/data", 0775, true);
+}
+
+if (!file_exists($fileTraffic)) {
+    file_put_contents($fileTraffic, "0");
+}
+
+$file = fopen($fileTraffic, "c+");
+
+if ($file !== false) {
+    if (flock($file, LOCK_EX)) {
+        rewind($file);
+
+        $isiTraffic = trim(stream_get_contents($file));
+
+        if ($isiTraffic === "" || !is_numeric($isiTraffic)) {
+            $isiTraffic = 0;
+        }
+
+        $totalPengunjung = (int) $isiTraffic + 1;
+
+        ftruncate($file, 0);
+        rewind($file);
+
+        fwrite($file, (string) $totalPengunjung);
+        fflush($file);
+
+        flock($file, LOCK_UN);
+    }
+
+    fclose($file);
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
